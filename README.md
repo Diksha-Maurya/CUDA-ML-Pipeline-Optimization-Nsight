@@ -1,4 +1,4 @@
-# Cuda-ML-Pipeline-Optimization-Nsight 
+# CUDA ML Pipeline Optimization with Nsight
 Optimized a real-time video segmentation pipeline using **CUDA**, **TensorRT**, **CV-CUDA**, and **Nsight profiling tools** — achieving full GPU acceleration and reducing end-to-end runtime from **52.14s to 3.89s**.
 
 ---
