@@ -10,3 +10,11 @@ Optimized a real-time video segmentation pipeline using CUDA, TensorRT, CV-CUDA,
 python video_segmentation/main_nvtx.py
 ```
 
+#Command to profile optimized modal
+
+```
+!nsys profile --trace cuda,nvtx,osrt \
+--output optimized \
+--force-overwrite=true \
+python video_segmentation/main_optimized.py
+```
