@@ -1,12 +1,15 @@
 import pycuda.driver as cuda
 import cvcuda
 import torch
+import nvtx
 
 from opencv_utils import BatchEncoder, BatchDecoder
 
 from opencv_utils import Preprocessing, Postprocessing
 
 from torch_utils import Segmentation
+
+nvtx.push_range("total")
 
 inference_size = (224, 224)
 batch_size = 4
@@ -37,6 +40,8 @@ postprocess = Postprocessing(
 
 inference = Segmentation("cat", batch_size, inference_size)
 
+nvtx.push_range("pipeline")
+
 decoder.start()
 encoder.start()
 
@@ -44,7 +49,9 @@ idx_batch = 0
 while True:
     print("Processing batch %d" % idx_batch)
 
-    with cvcuda_stream, torch.cuda.stream(torch_stream):
+    with cvcuda_stream, torch.cuda.stream(torch_stream), nvtx.annotate(
+         "batch_%d" % idx_batch   
+    ):
         # Stage 1: decode
         batch = decoder()
         if batch is None:
@@ -75,4 +82,8 @@ while True:
 
 encoder.join()
 
+nvtx.pop_range() #pipeline
+
 cuda_ctx.pop()
+
+nvtx.pop_range() #total
