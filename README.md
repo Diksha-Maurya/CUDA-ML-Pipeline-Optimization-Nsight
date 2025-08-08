@@ -63,7 +63,7 @@ nsys profile --trace cuda,nvtx,osrt \
 python video_segmentation/main_optimized.py
 ```
 
-**Pipeline Execution Time:** ⏱️ 3.890 seconds
+**Pipeline Execution Time:**  3.890 seconds
 
  Achieved a **\~13.4× speedup** by removing CPU-GPU bottlenecks and using GPU-native libraries throughout the pipeline.
 
